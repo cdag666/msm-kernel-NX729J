@@ -279,6 +279,11 @@ jobs:
           # 也不能加 --single-branch：那样 susfs-dev 之类的开发分支就 checkout 不到了。
           git clone --quiet https://github.com/Baka-SU/BakaSU KernelSU
           cd KernelSU
+          # ★ 改 SELinux domain 名：ksu -> su，避开 Duck Detector 的 context 黑名单
+          #   依据：defpackage/ek3.java 的 11 个 context 清单不含 su / su_file
+          sed -i 's/#define KERNEL_SU_DOMAIN "ksu"/#define KERNEL_SU_DOMAIN "su"/' kernel/selinux/selinux.h
+          sed -i 's/#define KERNEL_SU_FILE "ksu_file"/#define KERNEL_SU_FILE "su_file"/' kernel/selinux/selinux.h
+          grep -n 'KERNEL_SU_DOMAIN\|KERNEL_SU_FILE' kernel/selinux/selinux.h
           # ★ 克隆出来的仓库不一定有本地 main 分支：源仓库 HEAD 处于 detached 状态时
           #   (例如从一个 detached 的本地副本克隆)，git clone 只给 detached HEAD +
           #   refs/remotes/origin/main，本地 main 不存在。这时后面那句
