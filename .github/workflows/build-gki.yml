@@ -25,7 +25,7 @@ env:
   TZ: Asia/Shanghai
   CLANG_VER: r450784d
   # 固定内核构建时间（UTS_VERSION 与 /proc/version 都用它；date -d 需可解析）
-  KBUILD_BUILD_TIMESTAMP: "2024-04-03 09:12:45"
+  KBUILD_BUILD_TIMESTAMP: "Wed Apr  3 09:12:45 UTC 2024"
 
 on:
   workflow_dispatch:
